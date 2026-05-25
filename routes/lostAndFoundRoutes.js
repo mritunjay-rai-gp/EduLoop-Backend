@@ -1,0 +1,10 @@
+const express = require('express');
+const router = express.Router();
+const upload = require('../middlewares/multer');
+const {auth} = require('../middlewares/auth');
+const {createPost,getAllPost,getSinglePost,deletePost} = require('../controllers/lostAndFoundController');
+router.post("/create",auth,upload.single("image"),createPost);
+router.get("/getAllPost",auth,getAllPost);
+router.get("/:id",auth,getSinglePost);
+router.delete("/:id",auth,deletePost);
+module.exports=router;

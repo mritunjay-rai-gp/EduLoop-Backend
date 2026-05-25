@@ -1,0 +1,10 @@
+const express = require('express');
+const router = express.Router();
+const upload = require('../middlewares/multer');
+const {auth} = require('../middlewares/auth');
+const {createEvent,getAllEvent,getSingleEvent,deleteEvent} = require('../controllers/eventController');
+router.post("/createEvent",auth,upload.single("image"),createEvent);
+router.get("/getAllEvent",auth,getAllEvent);
+router.get("/:id",auth,getSingleEvent);
+router.delete("/:id",auth,deleteEvent);
+module.exports=router;

@@ -1,0 +1,10 @@
+const express = require('express');
+const router = express.Router();
+const upload = require('../middlewares/multer');
+const {auth} = require("../middlewares/auth");
+const {createNotes,getAllNotes,getSingleNote,deleteNote} = require('../controllers/notesController');
+router.post("/upload",auth,upload.single("file"),createNotes);
+router.get("/getAllNotes",auth,getAllNotes);
+router.get("/:id",auth,getSingleNote);
+router.delete("/:id",auth,deleteNote);
+module.exports=router;
