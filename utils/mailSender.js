@@ -36,6 +36,7 @@ async function mailSender(to,subject,htmlContent){
     } catch(error){
 
         console.log("FULL EMAIL ERROR:");
+        console.error("Email error:",)
     }
 }
 
