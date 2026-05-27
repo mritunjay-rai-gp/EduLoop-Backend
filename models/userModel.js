@@ -42,8 +42,8 @@ const userSchema = mongoose.Schema({
     },
     registrationNumber:{
         type:String,
-        unique: true,
-        default:"",
+        unique:true,
+        required:true,
     },
     bio:{
         type:String,
