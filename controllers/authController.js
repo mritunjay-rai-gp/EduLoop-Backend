@@ -5,7 +5,7 @@ const mailSender = require('../utils/mailSender');
 module.exports.registerUser = async function (req, res) {
     try {
 
-        const { fullName, email, phoneNumber, password } = req.body;
+        const { fullName, email, phoneNumber, password, registrationNumber } = req.body;
 
         // Check existing user
         let existingUser = await User.findOne({ email });
@@ -29,7 +29,7 @@ module.exports.registerUser = async function (req, res) {
             await existingUser.save();
 
             return res.status(200).json({
-                message: "OTP resent successfully"
+                message: "OTP sent successfully"
             });
         }
 
@@ -42,6 +42,7 @@ module.exports.registerUser = async function (req, res) {
             fullName,
             email,
             phoneNumber,
+            registrationNumber,
             password: hashedPassword,
             otp,
             otpExpires: Date.now() + 5 * 60 * 1000,
