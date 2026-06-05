@@ -7,7 +7,7 @@ router.post("/register",registerUser);
 router.post("/login",loginUser);
 router.post("/logout",logoutUser);
 router.post("/verifyUser",verifyUser);
-router.post("/edit",auth,upload.single("profilePic"),editProfile);
+router.put("/edit",auth,upload.single("profilePic"),editProfile);
 router.get("/:id",auth,getProfile);
 router.delete("/:id",auth,deleteAccount);
 module.exports=router;
