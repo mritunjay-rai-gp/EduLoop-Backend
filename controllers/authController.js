@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const generateToken= require('../utils/generateToken');
 const User = require('../models/userModel');
 const mailSender = require('../utils/mailSender');
+const uploadToCloudinary = require('../utils/upload');
 module.exports.registerUser = async function (req, res) {
     try {
 
@@ -170,6 +171,45 @@ module.exports.deleteAccount = async function(req,res){
         return res.status(200).json({
             message:"Account deleted successfully"
         });
+    } catch(error){
+        return res.status(500).json({
+            error:error.message
+        });
+    }
+};
+module.exports.editProfile = async function(req,res){
+    try{
+        const userId = req.userId;
+        const {bio,course,branch,year,semester} = req.body;
+
+        const updateData = {};
+
+        if(bio) updateData.bio = bio;
+        if(course) updateData.course = course;
+        if(branch) updateData.branch = branch;
+
+        if(year !== undefined)
+            updateData.year = year;
+
+        if(semester !== undefined)
+            updateData.semester = semester;
+
+        if(req.file){
+            const result = await uploadToCloudinary(req.file.buffer);
+            updateData.profilePic = result.secure_url;
+        }
+
+        const user = await User.findByIdAndUpdate(
+            userId,
+            updateData,
+            {new:true}
+        ).select("-password");
+
+        return res.json({
+            message:"Profile updated",
+            user
+        });
+
     } catch(error){
         return res.status(500).json({
             error:error.message

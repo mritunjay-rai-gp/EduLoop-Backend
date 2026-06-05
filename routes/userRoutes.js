@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const{registerUser,loginUser,logoutUser,verifyUser,getProfile,deleteAccount}= require('../controllers/authController');
+const{registerUser,loginUser,logoutUser,verifyUser,getProfile,deleteAccount,editProfile}= require('../controllers/authController');
 const {auth} = require('../middlewares/auth');
+const upload = require('../middlewares/multer');
 router.post("/register",registerUser);
 router.post("/login",loginUser);
 router.post("/logout",logoutUser);
 router.post("/verifyUser",verifyUser);
+router.post("/edit",auth,upload.single("profilePic"),editProfile);
 router.get("/:id",auth,getProfile);
 router.delete("/:id",auth,deleteAccount);
 module.exports=router;
