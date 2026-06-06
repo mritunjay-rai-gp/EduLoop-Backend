@@ -17,6 +17,7 @@ module.exports.createPost = async function(req,res){
             contactInfo: req.body.contactInfo,
             postedBy: req.userId,
             imageUrl: image,
+            status: req.body.status || "lost"
         })
         res.status(201).json({message:"Your request raised successfully"})
 
